@@ -1,0 +1,99 @@
+Web Technologies
+CSS
+AJAJX - Asynchronous JavaScript and XML
+	Brings asynchronous swapping between the client and the server, no need to refresh the page for the website.
+	JavaScript
+	JSON
+	XML
+HTML 5 version
+Java Script
+
+LAMP - Linux  MySQL 
+
+Django 
+MVC Model-View-Controller pattern, which enables a coherent architecture
+
+Before the MVC framework existed, web programming mixed the database access code and the main code of the page. 
+
+The MVC pattern was created to separate logic from representation and have an internal architecture that is more tangible and real. The Model-View-Controller (MVC) represents  three application layers
+
+	Models: These represent data organization in a database. In simple words, we can say that each model defines a table in the database and the relations between other models. It's thanks to them that every bit of data is stored in the database.
+	Python code is in models.
+
+	Views (Templates in django): These contain all the information that will be sent to the client. They make views that the final HTML document will generate. We can associate the HTML code with the views. Note Django replaces views ith Templates 
+	HTML code is in templates
+
+	Controllers (Views in Django): These contain all the actions performed by the server and are not visible to the client. The controller checks whether the user is authenticated or it can generate the HTML code from a template.
+	Python code is in views 
+
+Django, uses an MVT pattern. In this pattern, views are replaced by templates and controllers are replaced by views. 
+
+
+Django fundamental concepts
+
+virtualenv
+	source djang/bin/activate
+	which python -> points to a local version
+
+
+Absolute paths can be found:
+	example settings.py
+	DIR = os.path.abspath(os.path.dirname(__file__))
+	.. later ..
+	Databases = {
+			'default' :{
+				'ENGINE': django.db.backends.sqlite3,
+				'NAME' : os.path.join(DIR,'database.sqlite3'),
+				'USER' : etc etc etc......
+			}
+	}
+
+
+Django Modules To Explore
+	pip
+	virtualenv
+	fabric to deploy??
+	IPython
+	database migrations django.contrib
+	django-debug-toolbar (HTML interface on the side xray view into django)
+	django-extras - makemake management commands
+	crispy-forms floppy-forms - nice forms
+	Haystack - API search engines - offer search engines
+	Tasty Pie - RESTful API for Django - interact with Javascript
+	Celery - Distributed Task Queue - an asynchronous task queue/job queue based on 		distributed message passing.	
+	easy-thumbnails - images
+	django-reversion
+	django-grapelli - pretty, custom dashboard, drag and drop order of records, autolookup
+	more for registration, appointments, tagging, menus, ...
+
+Tasty Pie - RESTful API for Django - interact with Javascript
+	Web based API on top of Django, Designed for extention
+	Get 
+	Post
+	Concepts
+	Graceful Degradation
+
+	Flexible everything customizable interface
+		Data can round trip aything you can get should put
+	Reasonable defautls
+	URIs everywhere - 
+		HATEOAS - Hypermedia As the Engine of Application State
+		The user shouldn't have to know anything in advance
+		You get URIs back - All about exploreability
+		Deep linking
+
+
+	Full CRUD Methods create, read, update and delete are the four basic functions of persistent storage.
+
+			Operation			SQL		HTTP
+			Create				INSERT	PUT / POST	
+			Read (Retrieve)		SELECT	GET
+			Update (Modify)		UPDATE	PUT / PATCH	
+			Delete (Destroy)	DELETE	DELETE
+
+	Any data source
+
+	Flexible serialization, JSON, YAML, XML, bplist
+
+	pip django-tastypie
+
