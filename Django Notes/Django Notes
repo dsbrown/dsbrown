@@ -66,6 +66,14 @@ Django Modules To Explore
 	django-grapelli - pretty, custom dashboard, drag and drop order of records, autolookup
 	more for registration, appointments, tagging, menus, ...
 
+Fabric is a SSH automatization tool
+-
+Run a sequence of shell commands on a remote machine.
+-
+Useful for running cron jobs, database migrations, etc.
+-
+Easy to integrate to Boto to automatically run shell commands on thecurrently running EC2 instances (which have dynamic IPs)
+
 Tasty Pie - RESTful API for Django - interact with Javascript
 	Web based API on top of Django, Designed for extention
 	Get 
@@ -96,4 +104,80 @@ Tasty Pie - RESTful API for Django - interact with Javascript
 	Flexible serialization, JSON, YAML, XML, bplist
 
 	pip django-tastypie
+
+----------------------------------------------------------------------
+Creating a Django Project
+
+check version: python -c "import django; print(django.get_version())"
+
+django-admin.py startproject <project_name>
+Manage.py startapp <app_name>
+
+
+RDS Database
+Django sees RDS instances as ordinary MySQL servers
+Configure hostname/username/password normally in settings.py
+
+Since 1.2, Django supports multiple databases
+-
+In settings.py: DATABASE
+➭
+DATABASES
+•
+ This works nicely together with Amazon RDS
+-
+RDS gives you the IP/hostname of each launched MySQL instance.
+-
+ The instances can also be tagged and enumerated using Boto.
+•
+ Automated configuration
+-
+Integrate settings.py directly to AWS with Boto (enumerate RDS hosts).
+-
+Or pre-generate settings.py and distribute via Puppet.
+-
+Or pre-generate a JSON file, distribute via Puppet, and load it in settings.py.
+
+BOTO &SETTINGS.PY 
+•
+If you work with AWS, you need Boto
+-
+Full Python access to all AWS APIs.
+-
+Includes command line utilities, e.g. route53
+•
+Use Git version (not PyPI) to get all latest features
+-
+pip install -e git+https://github.com/boto/boto.git#egg=boto
+-
+Ubuntu also uses Boto, so put your own version in a virtualenv.
+•
+Use in Django settings.py to automatize configuration
+-
+Enumerate EC2 instances, RDS instances, get IP addresses.
+-
+ Tag your instances in a smart way to help enumeration.
+-
+Risk: AWS access key has to be available. IAM may he
+
+
+# settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': '/path/to/my.cnf',
+        },
+    }
+}
+
+
+# my.cnf
+[client]
+database = NAME
+user = USER
+password = PASSWORD
+default-character-set = utf8
+
+
 
