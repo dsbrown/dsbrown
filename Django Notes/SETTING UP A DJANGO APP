@@ -1,0 +1,206 @@
+SETTING UP A DJANGO APP 
+    For: Version Django 1.7 and Python 3.2/2.7
+
+QUICK SUMMARY (DETAIL BELOW)
+
+    django-admin startproject specs
+    cd specs
+    python manage.py migrate
+    python manage.py runserver
+    python manage.py createsuperuser
+        admin/admin
+        browdavi adminadmin!
+     http://127.0.0.1:8000/admin/
+
+
+SETTING UP A DJANGO APP - DETAIL
+    Check Django Version: $ python -c "import django;
+    print(django.get_version())"
+
+1.0 Set Up Project: 
+    $ django-admin.py startproject mysite 
+    
+    This will create a mysite directory in your current directory. 
+
+    mysite/
+        manage.py
+        mysite/
+            __init__.py
+            settings.py
+            urls.py
+            wsgi.py
+
+    mysite/settings.py. Normal Python module with module-level variables 
+    representing Django settings.
+
+2.0 Set Up Database
+
+    Edit mysite/settings.py
+    ENGINE
+        Either 'django.db.backends.sqlite3', 
+        'django.db.backends.postgresql_psycopg2', 
+        'django.db.backends.mysql', or 
+        'django.db.backends.oracle'
+
+    NAME name of your database - Default: 'C:/homes/user/mysite/sqlite3.db'
+    Time_Zone - 
+
+By default, the configuration uses SQLite. For SQLite, it‚ the full path to
+the database file. always use forward slashes, even on Windows
+
+3.0 Configure INSTALLED_APPS
+
+    INSTALLED_APPS contains a list of default apps
+
+3.1 Create the initial tables in the database for these default application
+
+    $ python manage.py migrate 
+
+    Creates any necessary database tables according to the database settings
+    in mysite/settings.py  Check the output:
+
+    $ python manage.py runserver 
+
+        Performing system checks...
+
+    visit http://127.0.0.1:8000/ 
+
+4.0  Create your application
+
+    cd to the same directory as manage.py and type this command:
+    $ python manage.py startapp polls 
+
+    This will create a directory polls, which is laid out like this:
+
+        polls/
+            __init__.py
+            admin.py
+            migrations/
+                __init__.py
+            models.py
+            tests.py
+            views.py
+
+    This directory structure will house the poll application.
+
+    You need to add this app to your INSTALLED_APPS which is in
+    <project>/settings.py:INSTALLED_APPS:
+
+        INSTALLED_APPS = (
+                'django.contrib.admin',
+                'django.contrib.auth',
+                'django.contrib.contenttypes',
+                'django.contrib.sessions',
+                'django.contrib.messages',
+                'django.contrib.staticfiles',
+                'polls'
+            )
+
+5.0  Create Your Data Model
+
+    polls/models.py file:
+
+    from django.db import models
+
+
+    class Question(models.Model):
+        question_text = models.CharField(max_length=200)
+        pub_date = models.DateTimeField('date published')
+
+
+    class Choice(models.Model):
+        question = models.ForeignKey(Question)
+        choice_text = models.CharField(max_length=200)
+        votes = models.IntegerField(default=0)
+
+6.0 Activating models
+
+    By default, INSTALLED_APPS contains the following apps, all of which come with Django:
+
+        django.contrib.admin – The admin site. You’ll use it in part 2 of this tutorial.
+        django.contrib.auth – An authentication system.
+        django.contrib.contenttypes – A framework for content types.
+        django.contrib.sessions – A session framework.
+        django.contrib.messages – A messaging framework.
+        django.contrib.staticfiles – A framework for managing static files.
+
+
+
+    Edit mysite/settings.py change the INSTALLED_APPS setting to include the
+    string 'polls'.
+
+    mysite/settings.py
+    INSTALLED_APPS = (
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'polls',
+    )
+
+    Django creates a database schema and API for Polls
+
+7.0 Make Migrations
+
+    Migrations are derived from the models file, and are essentially just a
+    history that Django can roll through to update your database schema to match
+    your current models, represented by simple Python classes.
+
+    $ python manage.py makemigrations polls
+
+    By running makemigrations, you’re telling Django that you’ve made some changes
+    to your models (in this case, you’ve made new ones) and that you’d like the
+    changes to be stored as a migration. Optional: [$python manage.py check] to
+    check validity of migration
+
+8.0 Migrate
+    Now, run migrate again to create those model tables in your database:
+
+    $ python manage.py migrate
+
+8.1 Rinse & Repeat
+    You can edit the models.py, makemigration then migrate over and over again.
+
+        cp new model.py into reporting
+
+        python manage.py makemigrations
+        python manage.py migrate
+
+        <over and over>
+
+
+9.0 Admin Interface
+    python manage.py createsuperuser
+    …interactive…
+
+    Edit <app_name>/admin.py
+    from django.contrib import admin
+    from <app_name>.models import Database_name
+
+    admin.site.register(Database_name)
+    python manage.py runserver 
+
+    Go to: http://127.0.0.1:8000/admin/
+
+
+10.0 Create Management Commands
+
+    Inside of the application (reporting or polls)
+        mkdir -p management/commands
+        touch management/__init__.py management/commands/__init__.py
+
+        python manage.py loadweightdata --path /Users/browdavi/Prog/SPECS/Datasource/weights/ContractWeights.xlsx --table ContractWeights
+
+        ./_loadweight_helper.py -d ~/Prog/SPECS/Datasource/Weights/
+
+        python manage.py loadsitedata --path /Users/browdavi/Prog/SPECS/Datasource/Agile_data_by_SiteID_v1.4.xlsx
+
+
+11.0 Customize the Form
+    class QuestionAdmin(admin.ModelAdmin):
+        fields = ['pub_date', 'question_text']
+
+
+

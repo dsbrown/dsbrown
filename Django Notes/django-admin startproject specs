@@ -4,10 +4,12 @@ python manage.py migrate
 python manage.py runserver
 python manage.py createsuperuser
     admin/admin
-    browdavi M69
+    browdavi adminadmin!
  http://127.0.0.1:8000/admin/
 
  python manage.py startapp reporting
+
+
 
     INSTALLED_APPS = (
         'django.contrib.admin',
@@ -18,4 +20,20 @@ python manage.py createsuperuser
         'django.contrib.staticfiles',
         'reporting'
     )
+
+cp new model.py into reporting
+
+python manage.py makemigrations
+python manage.py migrate
+
+mkdir -p management/commands
+touch management/__init__.py management/commands/__init__.py
+
+python manage.py loadweightdata --path /Users/browdavi/Prog/SPECS/Datasource/weights/ContractWeights.xlsx --table ContractWeights
+
+./_loadweight_helper.py -d ~/Prog/SPECS/Datasource/Weights/
+
+python manage.py loadsitedata --path /Users/browdavi/Prog/SPECS/Datasource/Agile_data_by_SiteID_v1.4.xlsx
+
+
 
